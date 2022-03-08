@@ -30,58 +30,53 @@ class homeView extends StatelessWidget {
                   )
                 : Column(
                     children: [
-                      Container(
-                        child: Lottie.asset("assets/lottie/dj.json"),
-                        height: context.dynamicHeight(0.2),
-                      ),
-                      SizedBox(
-                        height: context.dynamicHeight(0.63),
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemCount:
-                              context.read<HomeCubit>().model?.data?.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  Text(context
-                                          .read<HomeCubit>()
-                                          .model
-                                          ?.data?[index]
-                                          .firstName ??
-                                      ""),
-                                  Text(context
-                                          .read<HomeCubit>()
-                                          .model
-                                          ?.data?[index]
-                                          .lastName ??
-                                      ""),
-                                  Container(
-                                    width: context.dynamicWidth(0.38),
-                                    height: context.dynamicHeight(0.2),
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(context
-                                              .read<HomeCubit>()
-                                              .model
-                                              ?.data?[index]
-                                              .avatar ??
-                                          ""),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
+                      LottieContainer(context),
+                      GridViewBuilder(context)
                     ],
                   ),
           );
         },
       ),
+    );
+  }
+
+  SizedBox GridViewBuilder(BuildContext context) {
+    return SizedBox(
+      height: context.dynamicHeight(0.63),
+      child: GridView.builder(
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemCount: context.read<HomeCubit>().model?.data?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            elevation: 10,
+            child: Column(
+              children: [
+                Text(context.read<HomeCubit>().model?.data?[index].firstName ??
+                    ""),
+                Text(context.read<HomeCubit>().model?.data?[index].lastName ??
+                    ""),
+                Container(
+                  width: context.dynamicWidth(0.38),
+                  height: context.dynamicHeight(0.2),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        context.read<HomeCubit>().model?.data?[index].avatar ??
+                            ""),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Container LottieContainer(BuildContext context) {
+    return Container(
+      child: Lottie.asset("assets/lottie/dj.json"),
+      height: context.dynamicHeight(0.2),
     );
   }
 }
